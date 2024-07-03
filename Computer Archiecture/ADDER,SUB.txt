@@ -1,0 +1,92 @@
+HALF ADDER
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity HalfAdder is
+    Port ( A : in STD_LOGIC;
+           B : in STD_LOGIC;
+           Sum : out STD_LOGIC;
+           Carry : out STD_LOGIC);
+end HalfAdder;
+
+architecture Behavioral of HalfAdder is
+begin
+    Sum <= A XOR B;
+    Carry <= A AND B;
+end Behavioral;
+
+FULL ADDER
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity FullAdder is
+    Port ( A : in STD_LOGIC;
+           B : in STD_LOGIC;
+           Cin : in STD_LOGIC;
+           Sum : out STD_LOGIC;
+           Cout : out STD_LOGIC);
+end FullAdder;
+
+architecture Behavioral of FullAdder is
+    signal s1, c1, c2 : STD_LOGIC;
+begin
+    s1 <= A XOR B;
+    Sum <= s1 XOR Cin;
+    c1 <= A AND B;
+    c2 <= s1 AND Cin;
+    Cout <= c1 OR c2;
+end Behavioral;
+
+HALF SUB
+library IEEE; 
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity half_sub is
+port( A, B : in std_logic; 
+     DIFF, Borrow : out std_logic);
+end entity;
+
+architecture dataflow of half_sub is
+begin
+    DIFF <= A xor B;
+    Borrow <= not(A) and B;
+end dataflow;
+
+FULL SUB
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity full_sub is
+port( A, B, C : in std_logic;
+     DIFF, Borrow : out std_logic);
+end entity;
+
+architecture dataflow of full_sub is
+begin
+    DIFF <= (A xor B) xor C;
+    Borrow <= ((not A) and (B or C)) or (B and C);
+end dataflow;
+
+MUX
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity Mux4to1 is
+    Port ( A : in STD_LOGIC_VECTOR (3 downto 0);
+           S : in STD_LOGIC_VECTOR (1 downto 0);
+           Y : out STD_LOGIC);
+end Mux4to1;
+
+architecture Behavioral of Mux4to1 is
+begin
+    process(A, S)
+    begin
+        case S is
+            when "00" => Y <= A(0);
+            when "01" => Y <= A(1);
+            when "10" => Y <= A(2);
+            when "11" => Y <= A(3);
+            when others => Y <= '0';
+        end case;
+    end process;
+end Behavioral;
